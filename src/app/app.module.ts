@@ -3,9 +3,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
 import { 
   MatToolbarModule,MatGridListModule,MatButtonModule,MatCardModule, MatListModule, MatInputModule, MatCheckboxModule,
-  MatDialogModule
+  MatDialogModule, MatSlideToggleModule, MatSelectModule
 } from '@angular/material';  
 
 
@@ -53,7 +54,10 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     MatInputModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatSlideToggleModule,
+    MatSelectModule
   ],
   entryComponents: [
     LoginComponent
