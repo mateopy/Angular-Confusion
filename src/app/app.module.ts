@@ -1,8 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule,MatGridListModule,MatButtonModule,MatCardModule, MatListModule} from '@angular/material'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms'; 
+import { 
+  MatToolbarModule,MatGridListModule,MatButtonModule,MatCardModule, MatListModule, MatInputModule, MatCheckboxModule,
+  MatDialogModule
+} from '@angular/material';  
 
 
 import { AppComponent } from './app.component';
@@ -19,6 +23,7 @@ import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -31,7 +36,8 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     FooterComponent,
     AboutComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    LoginComponent
     
   ],
   imports: [
@@ -43,8 +49,15 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
     MatCardModule,
     FlexLayoutModule,
     AppRoutingModule,
-    MatListModule
+    MatListModule,
+    FormsModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatDialogModule
   ],
+  entryComponents: [
+    LoginComponent
+],
   
   providers: [
     DishService,
