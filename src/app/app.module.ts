@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { 
   MatToolbarModule,MatGridListModule,MatButtonModule,MatCardModule, MatListModule, MatInputModule, MatCheckboxModule,
-  MatDialogModule, MatSlideToggleModule, MatSelectModule
+  MatDialogModule, MatSlideToggleModule, MatSelectModule, MatProgressSpinnerModule
 } from '@angular/material';  
 
 
@@ -57,7 +57,8 @@ import { LoginComponent } from './login/login.component';
     MatDialogModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     LoginComponent
