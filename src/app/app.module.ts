@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms'; 
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { 
   MatToolbarModule,MatGridListModule,MatButtonModule,MatCardModule, MatListModule, MatInputModule, MatCheckboxModule,
-  MatDialogModule, MatSlideToggleModule, MatSelectModule, MatProgressSpinnerModule
+  MatDialogModule, MatSlideToggleModule, MatSelectModule, MatProgressSpinnerModule, MatSliderModule, MatSlider
 } from '@angular/material';  
 
 
@@ -18,6 +19,7 @@ import { DishdetailComponent } from './dishdetail/dishdetail.component';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { ProcessHttpMsgService } from './services/process-httpmsg.service';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { AboutComponent } from './about/about.component';
@@ -25,6 +27,7 @@ import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { LoginComponent } from './login/login.component';
+import { baseURL } from './shared/baseurl';
 
 
 
@@ -58,7 +61,9 @@ import { LoginComponent } from './login/login.component';
     ReactiveFormsModule,
     MatSlideToggleModule,
     MatSelectModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    HttpModule
   ],
   entryComponents: [
     LoginComponent
@@ -67,7 +72,9 @@ import { LoginComponent } from './login/login.component';
   providers: [
     DishService,
     PromotionService,
-    LeaderService
+    LeaderService,
+    {provide: 'BaseURL', useValue: baseURL},
+    ProcessHttpMsgService
   ],
   bootstrap: [AppComponent]
 })

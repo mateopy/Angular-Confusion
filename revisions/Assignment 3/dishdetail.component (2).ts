@@ -1,58 +1,62 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { Comment } from '../shared/comment';
-import { DishService } from '../services/dish.service';
 
+import { DishService } from '../services/dish.service';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import 'rxjs/add/operator/switchMap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
 })
-
 export class DishdetailComponent implements OnInit {
-
-  formErrors = {
-    'author': '',
-    'rating': '',
-    'comment': ''
-  };
-
-  validationMessages = {
-    'author': {
-      'required':      'Name is required.',
-      'minlength':     'Name must be at least 2 characters long.'
-    },
-    'comment': {
-      'required':      'Comment is required.',
-      
-    }
-  };
-
+  
   dish: Dish;
-  comment: Comment;
   dishIds: number[];
   prev: number;
   next: number;
   commentForm: FormGroup;
+  comment:Comment;
+
+  autoTicks = true;
+  disabled = false;
+  invert = false;
+  max = 5;
+  min = 1;
+  showTicks = true;
+  step = 1;
+  thumbLabel = true;
+  value = 5;
+  vertical = false;
+
+
+  formErrors = {
+    'author': '',
+    'comment': '',
+  };
+
+  validationMessages = {
+    'author': {
+      'required':      'Author Name is required.',
+      'minlength':     'Author Name must be at least 2 characters long.',
+      'maxlength':     'Author Name cannot be more than 25 characters long.'
+    },
+    'comment': {
+      'required':      'Comment is required.',
+    },
+  };
 
   constructor(private dishservice: DishService,
     private route: ActivatedRoute,
-    private location: Location,
-    private fb: FormBuilder,
-    @Inject('BaseURL') private BaseURL) {
+    private location: Location, private fb: FormBuilder) { 
       this.createForm();
-     }
+    }
 
   ngOnInit() {
-    let id = +this.route.snapshot.params['id'];
-    this.dishservice.getDish(id).subscribe(dish => this.dish = dish);
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
       .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
@@ -71,37 +75,21 @@ export class DishdetailComponent implements OnInit {
 
   createForm(): void {
     this.commentForm = this.fb.group({
-      author: ['', [Validators.required, Validators.minLength(2)] ],
-      rating: 5,
-      comment: ['', [Validators.required] ]
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
+      rating:[''],
+      comment: ['', [Validators.required, Validators.minLength(1)]]
       
     });
 
     this.commentForm.valueChanges
-      .subscribe(data => this.onValueChanged(data));
+    .subscribe(data => this.onValueChanged(data));
 
     this.onValueChanged(); // (re)set validation messages now
-
   }
-
-  onSubmit() {
-    this.comment = this.commentForm.value;
-    var d = new Date();
-    this.comment.date = d.toISOString();
-    this.dish.comments.push(this.comment);
-    /*
-    console.log(this.comment);
-     */
-    this.commentForm.reset({
-      author: '',
-      rating: 5,
-      comment: ''
-    });
-   
-  }
-
+  
   onValueChanged(data?: any) {
     if (!this.commentForm) { return; }
+    this.comment = this.commentForm.value;
     const form = this.commentForm;
     for (const field in this.formErrors) {
       // clear previous error message (if any)
@@ -116,4 +104,24 @@ export class DishdetailComponent implements OnInit {
     }
   }
 
+  onSubmit() {
+    this.comment = this.commentForm.value;
+    this.comment.date = new Date().toISOString();
+    this.dish.comments.push(this.comment);
+    console.log(this.comment);
+    this.commentForm.reset({
+      author: '',
+      comment: '',
+      rating: 5,
+    });
+  }
+
+  get tickInterval(): number | 'auto' {
+    return this.showTicks ? (this.autoTicks ? 'auto' : this._tickInterval) : 0;
+  }
+  set tickInterval(v) {
+    this._tickInterval = Number(v);
+  }
+  private _tickInterval = 1;
+  
 }
